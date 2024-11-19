@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Face Detection</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 min-h-screen">
+    <main class="container mx-auto px-4 py-8">
+      <!-- Hero Section -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse-slow">
+          AI Face Detection
+        </h1>
+        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+          Experience real-time face detection powered by TensorFlow.js and BlazeFace
+        </p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex flex-col items-center gap-6">
+        <button id="startBtn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg">
+          Start Camera
+        </button>
+
+        <div class="container relative w-full max-w-3xl aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-700/30">
+          <video id="video" class="w-full h-full object-cover opacity-0 transition-opacity duration-300" autoplay></video>
+          <canvas id="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+          <!-- Loading Overlay -->
+          <div id="loading" class="absolute inset-0 bg-black/50 backdrop-blur-dynamic flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center gap-4">
+              <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              <p class="text-white text-lg font-medium">Initializing AI...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid md:grid-cols-3 gap-6 mt-12 w-full max-w-4xl">
+          <div class="p-6 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 backdrop-blur-dynamic transition-all duration-300 hover:scale-105">
+            <h3 class="text-xl font-semibold mb-2 text-blue-400">Real-time Detection</h3>
+            <p class="text-gray-400">Instant face detection with high accuracy and performance</p>
+          </div>
+          <div class="p-6 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 backdrop-blur-dynamic transition-all duration-300 hover:scale-105">
+            <h3 class="text-xl font-semibold mb-2 text-purple-400">Privacy First</h3>
+            <p class="text-gray-400">All processing happens locally in your browser</p>
+          </div>
+          <div class="p-6 rounded-xl bg-pink-500/10 hover:bg-pink-500/20 backdrop-blur-dynamic transition-all duration-300 hover:scale-105">
+            <h3 class="text-xl font-semibold mb-2 text-pink-400">Easy to Use</h3>
+            <p class="text-gray-400">Simple interface with powerful AI capabilities</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
