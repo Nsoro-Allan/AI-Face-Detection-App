@@ -1,11 +1,11 @@
 # AI Face Detection App
 
-A simple AI-powered application that detects faces in images or real-time video streams using computer vision.
+A simple AI-powered application that detects faces in real-time video streams using computer vision.
 
 ## Features
 
-- Real-time face detection with advanced AI.
-- Easy setup with minimal configuration.
+- Real-time face detection with AI.
+- Easy to setup or to use.
 - Built with modern web technologies for optimal performance.
 
 ## Getting Started
