@@ -93,7 +93,10 @@ function handleResize() {
   const container = canvas.parentElement;
   const aspectRatio = 16 / 9;
   
-  const newWidth = container.clientWidth;
+  // Make the width larger but still responsive
+  // Use 90% of container width on mobile, 80% on desktop
+  const containerWidth = container.clientWidth;
+  const newWidth = Math.min(containerWidth * (window.innerWidth < 768 ? 0.90 : 0.80), 1280); // max width 1280px
   const newHeight = newWidth / aspectRatio;
   
   canvas.width = newWidth;
