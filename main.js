@@ -91,12 +91,11 @@ async function detectFaces() {
 // Handle window resize
 function handleResize() {
   const container = canvas.parentElement;
-  const aspectRatio = 16 / 9;
+  const aspectRatio = window.innerWidth < 768 ? 4/3 : 16/9;
   
   // Make the width larger but still responsive
-  // Use 95% of container width on mobile, 85% on desktop
   const containerWidth = container.clientWidth;
-  const newWidth = Math.min(containerWidth * (window.innerWidth < 768 ? 0.95 : 0.85), 1440); // increased max width to 1440px
+  const newWidth = Math.min(containerWidth * (window.innerWidth < 768 ? 0.95 : 0.85), 1440);
   const newHeight = newWidth / aspectRatio;
   
   canvas.width = newWidth;
@@ -112,7 +111,6 @@ async function init() {
   
   startBtn.addEventListener('click', async () => {
     if (!model) {
-      // Show loading overlay only when user clicks start
       loadingOverlay.style.display = 'flex';
       await loadModel();
     }
@@ -121,16 +119,16 @@ async function init() {
       await setupCamera();
       isRunning = true;
       startBtn.textContent = 'Stop Camera';
-      startBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-      startBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+      startBtn.style.backgroundColor = '#dc2626'; // red-600
+      startBtn.style.borderColor = '#dc2626';
       detectFaces();
     } else {
       isRunning = false;
       video.style.opacity = '0';
       video.srcObject.getTracks().forEach(track => track.stop());
       startBtn.textContent = 'Start Camera';
-      startBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
-      startBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+      startBtn.style.backgroundColor = '#2563eb'; // blue-600
+      startBtn.style.borderColor = '#2563eb';
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
   });

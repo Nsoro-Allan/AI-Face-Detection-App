@@ -21,11 +21,11 @@
 
       <!-- Main Content -->
       <div class="flex flex-col items-center gap-6">
-        <button id="startBtn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg">
+        <button id="startBtn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg font-medium">
           Start Camera
         </button>
 
-        <div class="container relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-700/30 mx-auto">
+        <div class="container relative w-full max-w-5xl md:aspect-video aspect-[4/3] rounded-xl overflow-hidden shadow-2xl bg-gray-700/30 mx-auto">
           <video id="video" class="w-full h-full object-cover opacity-0 transition-opacity duration-300" autoplay></video>
           <canvas id="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
           <!-- Loading Overlay -->
