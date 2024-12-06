@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs';
 import * as blazeface from '@tensorflow-models/blazeface';
 import './style.css';
+import * as faceapi from '@vladmandic/face-api';
 
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
@@ -14,6 +15,7 @@ let isRunning = false;
 // Load the BlazeFace model
 async function loadModel() {
   model = await blazeface.load();
+  await loadFaceAPIModels();
   loadingOverlay.style.display = 'none';
 }
 
@@ -41,22 +43,47 @@ async function setupCamera() {
 async function detectFaces() {
   if (!isRunning) return;
   
+  // BlazeFace predictions
   const predictions = await model.estimateFaces(video, false);
   
+  // Face-API.js detections
+  const detections = await faceapi.detectAllFaces(video, 
+    new faceapi.TinyFaceDetectorOptions())
+    .withFaceLandmarks()
+    .withFaceExpressions()
+    .withAgeAndGender();
+
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // Draw rectangles around detected faces
-  predictions.forEach(prediction => {
-    const start = prediction.topLeft;
-    const end = prediction.bottomRight;
-    const size = [end[0] - start[0], end[1] - start[1]];
+  // Draw detections with age and emotion
+  if (detections && detections.length > 0) {
+    const displaySize = { width: video.width, height: video.height };
+    const resizedDetections = faceapi.resizeResults(detections, displaySize);
     
-    // Simple rectangle with solid color
-    ctx.strokeStyle = '#00ff00';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(start[0], start[1], size[0], size[1]);
-  });
+    resizedDetections.forEach(detection => {
+      const box = detection.detection.box;
+      
+      // Draw rectangle
+      ctx.strokeStyle = '#00ff00';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(box.x, box.y, box.width, box.height);
+      
+      // Draw age and emotion
+      ctx.fillStyle = '#00ff00';
+      ctx.font = '16px Arial';
+      ctx.fillText(
+        `Age: ${Math.round(detection.age)} years`,
+        box.x, 
+        box.y - 20
+      );
+      ctx.fillText(
+        `Emotion: ${getTopExpression(detection.expressions)}`,
+        box.x, 
+        box.y - 5
+      );
+    });
+  }
   
   requestAnimationFrame(detectFaces);
 }
@@ -103,6 +130,24 @@ async function init() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
   });
+}
+
+// At the beginning of the file, where models are loaded
+async function loadFaceAPIModels() {
+  await Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
+    faceapi.nets.faceExpressionNet.loadFromUri('./models'),
+    faceapi.nets.ageGenderNet.loadFromUri('./models')
+  ]);
+}
+
+// Add this helper function to get the strongest emotion
+function getTopExpression(expressions) {
+    return Object.entries(expressions)
+        .reduce((prev, current) => 
+            prev[1] > current[1] ? prev : current
+        )[0]
 }
 
 init();
