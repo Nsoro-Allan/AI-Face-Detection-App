@@ -25,11 +25,11 @@
           Start Camera
         </button>
 
-        <div class="container relative w-full max-w-3xl aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-700/30">
+        <div class="container relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-700/30 mx-auto">
           <video id="video" class="w-full h-full object-cover opacity-0 transition-opacity duration-300" autoplay></video>
           <canvas id="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
           <!-- Loading Overlay -->
-          <div id="loading" class="absolute inset-0 bg-black/50 backdrop-blur-dynamic flex items-center justify-center">
+          <div id="loading" class="absolute inset-0 bg-black/50 backdrop-blur-dynamic flex items-center justify-center" style="display: none;">
             <div class="flex flex-col items-center justify-center gap-4">
               <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
               <p class="text-white text-lg font-medium">Initializing AI...</p>

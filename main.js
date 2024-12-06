@@ -94,9 +94,9 @@ function handleResize() {
   const aspectRatio = 16 / 9;
   
   // Make the width larger but still responsive
-  // Use 90% of container width on mobile, 80% on desktop
+  // Use 95% of container width on mobile, 85% on desktop
   const containerWidth = container.clientWidth;
-  const newWidth = Math.min(containerWidth * (window.innerWidth < 768 ? 0.90 : 0.80), 1280); // max width 1280px
+  const newWidth = Math.min(containerWidth * (window.innerWidth < 768 ? 0.95 : 0.85), 1440); // increased max width to 1440px
   const newHeight = newWidth / aspectRatio;
   
   canvas.width = newWidth;
@@ -112,6 +112,7 @@ async function init() {
   
   startBtn.addEventListener('click', async () => {
     if (!model) {
+      // Show loading overlay only when user clicks start
       loadingOverlay.style.display = 'flex';
       await loadModel();
     }
